@@ -1,0 +1,109 @@
+Of course, here's an extended paragraph that includes information about saving the FFT graph:
+
+"In this Python code, we've developed a comprehensive system for diagnosing asynchronous motor faults. The system acquires stator current data using a sensor, applies Fast Fourier Transform (FFT) analysis to this data, and assesses if there's a motor fault. Specifically, if the amplitude at a particular frequency (150 Hz) surpasses a threshold of 24, it triggers an alarm and sends an alert to a web interface. This alarm system ensures immediate attention to any issues, even if operators aren't in close proximity to the machine. When a fault is detected, the code activates a red LED, sounding an audible alarm, and sends a diagnostic report to the web interface, which can be accessed remotely. In the absence of a fault, the code activates a green LED, providing a different visual cue. Moreover, the code saves the FFT graph, allowing for historical analysis and record-keeping, which can be valuable for performance assessment and diagnostics."
+
+This updated paragraph now includes information about saving the FFT graph along with the other functionalities.
+
+import serial
+import RPi.GPIO as GPIO
+import numpy as np
+import matplotlib.pyplot as plt
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# GPIO pin numbers for the LEDs
+YELLOW_LED_PIN = 17
+RED_LED_PIN = 22
+GREEN_LED_PIN = 27
+
+# Setup GPIO pins
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(YELLOW_LED_PIN, GPIO.OUT)
+GPIO.setup(RED_LED_PIN, GPIO.OUT)
+GPIO.setup(GREEN_LED_PIN, GPIO.OUT)
+
+ser = serial.Serial('/dev/ttyUSB0', 115200)
+ser.flushInput()
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/diagnostics')
+def run_diagnostics():
+    # Turn on the yellow LED
+    GPIO.output(YELLOW_LED_PIN, GPIO.HIGH)
+    GPIO.output(RED_LED_PIN, GPIO.LOW)
+    GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+
+    Data = []
+
+    while len(Data) < 13000:
+        if ser.in_waiting > 0:
+            data = ser.readline().decode().strip()
+            print(data)
+            # Convert raw sensor data to actual current values
+            tension = (float(data) * (3.3 / 1024))
+            c1 = (tension - 1.627) / 0.066
+            courant = (c1 - 0.372) * 1.57
+            Data.append("{0:,.3f}".format(courant))  # Convert data to float and append
+
+    # Perform FFT on the data
+    fft_data = np.abs(np.fft.fft(Data))
+
+    # Calculate the frequency axis for the FFT plot
+    frequencies = np.arange(0, 10000, 10000 / 13000)
+
+    # Find the index of the frequency 150
+    index_150 = np.abs(frequencies - 150).argmin()
+
+    # Get the amplitude at frequency 150
+    amplitude_150 = np.abs(fft_data[index_150])
+
+    print("Amplitude at frequency 150:", amplitude_150)
+
+    # If the amplitude at frequency 150 exceeds 24, it indicates a motor fault
+    fault_detected = amplitude_150 > 24
+
+    # Control the LEDs based on the diagnostic result
+    if fault_detected:
+        # Turn on the red LED
+        GPIO.output(RED_LED_PIN, GPIO.HIGH)
+        # Turn off the green LED
+        GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+    else:
+        # Turn off the red LED
+        GPIO.output(RED_LED_PIN, GPIO.LOW)
+        # Turn on the green LED
+        GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
+
+    # Turn off the yellow LED
+    GPIO.output(YELLOW_LED_PIN, GPIO.LOW)
+
+    # Plot the FFT data
+    plt.figure()
+    plt.plot(frequencies[:400], 10 * np.log10(fft_data)[:400])
+    plt.xlabel('Frequency')
+    plt.ylabel('Amplitude')
+
+    # Save the FFT plot as an image file
+    plt.savefig('static/fft_plot.png')
+    plt.close()
+
+    # If a fault is detected, it triggers the LEDs and sends a result to the web interface
+    return render_template('diagnostics.html', fault_detected=fault_detected)
+
+@app.route('/result')
+def show_result():
+    fault_detected = request.args.get('fault_detected')
+    return render_template('result.html', fault_detected=fault_detected)
+
+if __name__ == '__main__':
+    try:
+        app.run(host='192.168.1.157')
+    except Exception as e:
+        print("An error occurred:", str(e))
+    finally:
+        # Cleanup GPIO pins
+        GPIO.cleanup()

@@ -1,0 +1,46 @@
+
+Python 3.11 is now installed on your Raspberry Pi.
+
+## Installation of Necessary Libraries
+
+### Installing Essential Libraries
+
+The project relies on specific libraries for data analysis and hardware interaction. Here's how to install them:
+
+1. Install the required libraries:
+
+- PySerial for communication with the ACS712 current sensor:
+
+  ```
+  pip install pyserial
+  ```
+
+- Numpy for data analysis and FFT calculations:
+
+  ```
+  pip install numpy
+  ```
+
+- Matplotlib for data visualization:
+
+  ```
+  pip install matplotlib
+  ```
+
+- RPi.GPIO for controlling GPIO pins:
+
+  ```
+  pip install RPi.GPIO
+  ```
+
+- Flask for creating a web interface:
+
+  ```
+  pip install Flask
+  ```
+
+With the necessary libraries in place, you're ready to begin programming the Asynchronous Motor Fault Diagnosis System.
+
+## Next Steps
+
+With your Raspberry Pi prepared and Python 3.11 and libraries installed, you can now proceed to [programming the system](#programming) and using it for asynchronous motor fault diagnosis.

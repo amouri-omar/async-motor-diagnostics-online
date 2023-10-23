@@ -1,0 +1,24 @@
+
+Your Raspberry Pi is now set up and ready for the next steps in the project.
+In this project, we encountered a critical compatibility issue between the required Python version, NumPy, and Matplotlib.
+ The latest versions of NumPy and Matplotlib necessitated Python 3.11, which, at the time, wasn't readily available through the standard repositories.
+ To address this compatibility challenge, we utilized the "deadsnakes" function, which allowed us to force the installation of a Python version that was compatible with both NumPy and Matplotlib
+
+## Installation of Python 3.11
+
+### Step-by-Step Python 3.11 Installation
+
+Python 3.11 is a critical part of this project. Here's how to install it on your Raspberry Pi:
+
+1. Open a terminal on your Raspberry Pi.
+
+2. Run the following commands to install Python 3.11:
+
+	sudo add-apt-repository ppa:deadsnakes/ppa
+	sudo apt update
+	sudo apt install python3.11
+
+3. Verify the installation by checking the Python version:
+
+	python3.11--version
+ 

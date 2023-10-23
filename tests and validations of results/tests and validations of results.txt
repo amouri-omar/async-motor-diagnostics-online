@@ -1,0 +1,37 @@
+Certainly, here's the updated and detailed explanation of the "Tests and Validations of Results" section:
+
+**V.6 Tests and Validations of Results**
+
+In this section, we detail the comprehensive testing and validation procedures applied to ensure the robustness and reliability of our asynchronous motor fault diagnosis system.
+
+**1. Motor Selection and Testing:**
+
+- **Motor Specifications:** For our tests, we carefully chose an asynchronous motor that closely matched the expected characteristics of industrial motors. This selection included considerations like power ratings, voltage, and current characteristics, ensuring that our testing would closely mimic real-world conditions.
+
+- **Load Simulation:** To recreate authentic operating scenarios, we incorporated a "moteur à courant continu" (direct current motor), often abbreviated as MMC, into our setup. In addition to this, we added resistive and unbalanced load simulations. This extensive load simulation setup enabled us to mimic the complex load conditions that asynchronous motors often encounter during operation. It played a crucial role in testing the effectiveness of our diagnostic system under various load scenarios.
+
+**2. Data Collection and Analysis:**
+
+- **Acquisition of Stator Current Data:** Our system collected stator current data from the asynchronous motor using the ACS712 current sensor. The system ensured that the data collection was accurate, stable, and properly synchronized with the motor operation.
+
+- **Frequency Analysis with FFT:** We applied the Fast Fourier Transform (FFT) algorithm to analyze the stator current data. This transformed the data into the frequency domain, revealing the spectral characteristics of the current. The analysis focused on identifying frequency components related to potential faults.
+
+**3. Introduction of Faults:**
+
+- **Unbalanced Voltage Fault:** To further rigorously test the system, we introduced a specific fault known as "déséquilibre de tensions" (unbalanced voltage). This fault was introduced by adding a resistor to one phase of the asynchronous motor, simulating the occurrence of voltage imbalances in real-world scenarios. The resonance frequency of this fault was known to be around 150Hz.
+
+**4. Fault Detection and Alert Mechanism:**
+
+- **Fault Detection:** In our system, a primary criterion for fault detection was the amplitude of the frequency component at 150Hz, which we established as the indicator of a "déséquilibre de tensions" fault. If the amplitude exceeded 24, the system concluded that a fault was present in the motor.
+
+- **Alerts and Notifications:** The system not only detected faults but also triggered alerts. Visual and auditory indicators, including LEDs and a buzzer, were activated when a fault was detected. This instantaneous alert mechanism ensures that maintenance personnel or operators are promptly informed of any issues, even if they are not in close proximity to the machinery.
+
+**5. Data Logging and Archiving:**
+
+- **Data Storage:** The system archived the collected stator current data, preserving it for future reference, analysis, or integration with databases or artificial intelligence systems. This data logging capability ensures a historical record of the motor's operational characteristics and fault occurrences.
+
+**6. FFT Plot Saving:**
+
+- **Frequency Plot Preservation:** To provide a graphical representation of the FFT analysis results, our system generated FFT plots. These plots displayed the frequency components and their amplitudes. We saved these plots for reference and analysis.
+
+Through these extensive and meticulous tests and validations, we ensured that our asynchronous motor fault diagnosis system can accurately detect a range of motor faults, including voltage imbalances, and provide immediate alerts while archiving valuable data for ongoing analysis and monitoring.

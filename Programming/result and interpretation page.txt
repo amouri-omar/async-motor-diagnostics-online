@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detailed Results</title>
+    <style>
+        /* Add custom CSS styles for the detailed results page */
+
+        /* Define the font family for the entire page */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styling for the heading */
+        h1 {
+            color: #333; /* Text color */
+            text-align: center; /* Center-align the heading */
+        }
+
+        /* Styling for the result section */
+        .result {
+            text-align: center; /* Center-align the result section */
+            margin-bottom: 20px; /* Add margin at the bottom for spacing */
+        }
+
+        /* Styling for the result heading */
+        .result h1 {
+            color: #dc3545; /* Red text color for fault detected */
+        }
+
+        /* Styling for the button container */
+        .button-container {
+            text-align: center; /* Center-align the button container */
+            margin-top: 20px; /* Add top margin for spacing */
+        }
+
+        /* Styling for the button */
+        .button {
+            display: inline-block; /* Display the button as an inline block */
+            padding: 10px 20px; /* Define padding for the button */
+            background-color: #007bff; /* Background color of the button */
+            color: #fff; /* Text color of the button */
+            text-decoration: none; /* Remove underlining of the text */
+            border-radius: 5px; /* Add rounded corners to the button */
+        }
+
+        /* Hover effect for the button */
+        .button:hover {
+            background-color: #0056b3; /* Change background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Result Section -->
+    <div class="result">
+        <!-- Check if a fault is detected and display the appropriate message -->
+        {% if fault_detected == "True" %}
+            <h1>Fault Detected!</h1>
+        {% else %}
+            <h1>No Fault Detected</h1>
+        {% endif %}
+    </div>
+
+    <!-- Button Container for Returning to Home -->
+    <div class="button-container">
+        <!-- Link to go back to the home page -->
+        <a href="/" class="button">Back to Home</a>
+    </div>
+</body>
+</html>

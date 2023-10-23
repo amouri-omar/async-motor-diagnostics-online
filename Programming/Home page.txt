@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CCO³Tech Diagnostic Tool</title>
+    <style>
+        /* Add custom CSS styles for the index page */
+
+        /* Define the font family for the entire page */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styling for the heading */
+        h1 {
+            color: #333; /* Text color */
+            text-align: center; /* Center-align the heading */
+        }
+
+        /* Styling for the button container */
+        .button-container {
+            text-align: center; /* Center-align the button container */
+            margin-top: 20px; /* Add top margin for spacing */
+        }
+
+        /* Styling for the button */
+        .button {
+            display: inline-block; /* Display the button as an inline block */
+            padding: 10px 20px; /* Define padding for the button */
+            background-color: #007bff; /* Background color of the button */
+            color: #fff; /* Text color of the button */
+            text-decoration: none; /* Remove underlining of the text */
+            border-radius: 5px; /* Add rounded corners to the button */
+        }
+
+        /* Hover effect for the button */
+        .button:hover {
+            background-color: #0056b3; /* Change background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Heading -->
+    <h1>CCO³Tech Diagnostic Tool</h1>
+
+    <!-- Button Container for Running Diagnostic -->
+    <div class="button-container">
+        <!-- Link to the diagnostics page with a parameter to collect data -->
+        <a href="/diagnostics?collecting_data=True" class="button">Run Diagnostic</a>
+    </div>
+</body>
+</html>
